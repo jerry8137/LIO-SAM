@@ -43,6 +43,12 @@ RUN apt-get update \
     && apt install -y libgtsam-dev libgtsam-unstable-dev \
     && rm -rf /var/lib/apt/lists/*
 
+RUN apt update \
+    && apt install python-pip ros-melodic-ros-numpy
+
+RUN pip install tqdm \
+    ipdb
+
 RUN export DISPLAY=":0.0"
 
 # SHELL ["/bin/bash", "-c"]

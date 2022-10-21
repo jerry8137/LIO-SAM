@@ -22,7 +22,8 @@ import ipdb
 import ros_numpy
 
 bag = rosbag.Bag('/data/itri/2022-04-14-15-21-13_0.bag')
-for topic, msg, t in bag.read_messages(topics=['/velodyne/top_vls128']):
+# bag = rosbag.Bag('/data/sample/campus_small_dataset.bag')
+for topic, msg, t in bag.read_messages(topics=['/top_lidar_points']):
+# for topic, msg, t in bag.read_messages(topics=['/points_raw']):
     arr = ros_numpy.point_cloud2.pointcloud2_to_array(msg)
     ipdb.set_trace()
-bag.close()

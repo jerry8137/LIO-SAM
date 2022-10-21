@@ -44,7 +44,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN apt update \
-    && apt install python-pip ros-melodic-ros-numpy
+    && apt install python-pip ros-melodic-ros-numpy -y
 
 RUN pip install tqdm \
     ipdb
@@ -53,14 +53,14 @@ RUN export DISPLAY=":0.0"
 
 # SHELL ["/bin/bash", "-c"]
 
-# RUN mkdir -p ~/catkin_ws/src \
-#     && cd ~/catkin_ws/src \
-#     && git clone https://github.com/TixiaoShan/LIO-SAM.git \
-#     && cd .. \
-#     && source /opt/ros/kinetic/setup.bash \
-#     && catkin_make
-# 
 RUN echo "source /opt/ros/melodic/setup.bash" >> /root/.bashrc \
     && echo "source /root/catkin_ws/devel/setup.bash" >> /root/.bashrc
+
+#install python pcl
+WORKDIR /root
+RUN git clone https://github.com/wanguangxi/Python-PCL-Ubuntu18.04.git
+WORKDIR /root/Python-PCL-Ubuntu18.04
+RUN pip install python_pcl-0.3.0rc1-cp27-cp27mu-linux_x86_64.whl
+RUN rm -r /root/Python-PCL-Ubuntu18.04
 
 WORKDIR /root/catkin_ws

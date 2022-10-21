@@ -1,0 +1,17 @@
+<launch>
+    <arg name="bags"/>
+
+    <include file="$(find lidar_preprocess)/launch/lidar_preprocess.launch"/>
+    <node name="rosbag_play" pkg="rosbag" type="play" required="true"
+        launch-prefix="bash -c 'sleep 3; $0 $@' "
+        output="screen"
+        args="--topics
+                /imu/data
+                /velodyne/top_vls128
+              -r 
+                0.3              
+              -s 
+                0
+              --bags 
+                $(arg bags)"/>
+</launch>

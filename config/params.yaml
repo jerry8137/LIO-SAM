@@ -2,7 +2,7 @@ lio_sam:
 
   # Topics
   # pointCloudTopic: "points_raw"               # Point cloud data
-  pointCloudTopic: "velodyne/top_vls128"        # Point cloud data
+  pointCloudTopic: "points_raw"        # Point cloud data
   # imuTopic: "imu_correct"                     # IMU data
   imuTopic: "imu/data"                          # IMU data
   odomTopic: "odometry/imu"                   # IMU pre-preintegration odometry, same frequency as IMU
@@ -26,7 +26,7 @@ lio_sam:
 
   # Sensor Settings
   sensor: velodyne                            # lidar sensor type, 'velodyne' or 'ouster' or 'livox'
-  N_SCAN: 16                                  # number of lidar channel (i.e., Velodyne/Ouster: 16, 32, 64, 128, Livox Horizon: 6)
+  N_SCAN: 128                                  # number of lidar channel (i.e., Velodyne/Ouster: 16, 32, 64, 128, Livox Horizon: 6)
   Horizon_SCAN: 1800                          # lidar horizontal resolution (Velodyne:1800, Ouster:512,1024,2048, Livox Horizon: 4000)
   downsampleRate: 1                           # default: 1. Downsample your data if too many points. i.e., 16 = 64 / 4, 16 = 16 / 1
   lidarMinRange: 1.0                          # default: 1.0, minimum lidar range to be used
@@ -41,19 +41,32 @@ lio_sam:
   imuRPYWeight: 0.01
 
   # Extrinsics: T_lb (lidar -> imu)
-  extrinsicTrans: [0.0, 0.0, 0.0]
+  # extrinsicTrans: [-2.0, 0.0, 1.0]
+  # extrinsicRot: [-0.9996620, -0.0259956, 0,
+  #                 0.0259956, -0.9996620, 0,
+  #                 0, 0, 1]
+  # extrinsicRPY: [-0.9996620, -0.0259956, 0,
+  #                 0.0259956, -0.9996620, 0,
+  #                 0, 0, 1]
+  extrinsicTrans: [-1.975, -0.015, -1.047]
+  extrinsicRot: [-0.9996620,  0.0259956, -0.0239925,
+                 -0.0259956, -0.9996621, -0.0003119,
+                 -0.0239925,  0.0003119,  0.9997121]
+  extrinsicRPY: [-0.9996620,  0.0259956, -0.0239925,
+                 -0.0259956, -0.9996621, -0.0003119,
+                 -0.0239925,  0.0003119,  0.9997121]
   # extrinsicRot: [-1, 0, 0,
   #                 0, 1, 0,
   #                 0, 0, -1]
   # extrinsicRPY: [0, -1, 0,
   #                1, 0, 0,
   #                0, 0, 1]
-  extrinsicRot: [1, 0, 0,
-                  0, 1, 0,
-                  0, 0, 1]
-  extrinsicRPY: [1, 0, 0,
-                  0, 1, 0,
-                  0, 0, 1]
+  # extrinsicRot: [1, 0, 0,
+  #                0, 1, 0,
+  #                0, 0, 1]
+  # extrinsicRPY: [1, 0, 0,
+  #                0, 1, 0,
+  #                0, 0, 1]
 
   # LOAM feature threshold
   edgeThreshold: 1.0
@@ -71,7 +84,7 @@ lio_sam:
   rotation_tollerance: 1000                     # radians
 
   # CPU Params
-  numberOfCores: 4                              # number of cores for mapping optimization
+  numberOfCores: 8                              # number of cores for mapping optimization
   mappingProcessInterval: 0.15                  # seconds, regulate mapping frequency
 
   # Surrounding map
